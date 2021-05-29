@@ -1,0 +1,6 @@
+# Python bianry files
+
+.pyc
+
+# Folders
+__pycache__

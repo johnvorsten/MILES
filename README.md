@@ -1,0 +1,3 @@
+MILES: Multiple-instance learning via embedded instance selection
+
+IEEE TRANSACTIONS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE, VOL. 28, NO. 12, DECEMBER 2006
