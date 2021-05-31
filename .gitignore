@@ -1,6 +1,9 @@
 # Python bianry files
-
+*/__pycache__
 .pyc
+
+# Other files
+*.png
 
 # Folders
 __pycache__
