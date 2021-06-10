@@ -3,7 +3,7 @@
 .pyc
 
 # Build files
-**/build
+**/build/**
 **/dist
 **.egg**
 
