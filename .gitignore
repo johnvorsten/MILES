@@ -3,8 +3,10 @@
 .pyc
 
 # Build files
-*/build
-*/dist
+**/build
+**/dist
+**.egg**
+
 
 # Other files
 
