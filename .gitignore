@@ -2,6 +2,10 @@
 */__pycache__
 .pyc
 
+# Build files
+*/build
+*/dist
+
 # Other files
 
 
