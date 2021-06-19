@@ -7,6 +7,7 @@ Created on Mon May 31 17:03:08 2021
 
 
 # Python imports
+import unittest
 
 # Third party imports
 import numpy as np

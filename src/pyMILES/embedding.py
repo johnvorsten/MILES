@@ -2,6 +2,56 @@
 """
 Created on Sat May 29 18:11:55 2021
 
+Definitions of variables and vocabulary
+Vocabulary and variables attempt to match the original paper
+
+Concept class: an array of shape (k,p) where k is the number of 
+    instances in the concept class. The total number of instances is equal
+    to the total number of 'concepts'. A bag contains multiple concepts.
+    If each bag contains the same number of instances, then 
+    k = n_bags * n_instances_per_bag
+    
+Bag: Text
+
+Euclidean distance: The distance between two vectors
+
+RBF (radial basis function) distance: This is basically the exponential of the 
+    euclidean distance
+
+Gaussian Distance: A function of the form a * exponential( -(x-b)**2 / (2*c**2))
+    It is basically the exponentail of the squarred euclidean distance
+
+Most likely estimator: The most likely estimator is a similarity measure 
+    between the entire concept class C and a bag B
+    C = {x^k : k=1, ..., n_instances}
+    B = {x_j : j=1, ..., bag_size}
+    Note: this is the estimator that maximizes the diverse density
+    of a concept DD(t)
+
+embedding (of a single bag): (np.ndarray) size (k,1) where k is the number of 
+    concepts in the concept class. The kth feature in the concept class 
+    realizes the kth row of the matrix. This verbiage represents the 
+    embedding of a SINGLE bag
+    
+embedding (of all bags): (np.ndarray) size (k, i) where k is the number of 
+    concepts in the concept class, and i is the total number of bags being 
+    embedded. Each column in the array represents a bag,
+    and the kth feature in the concept class realizes the kth row of the 
+    matrix.
+
+concept_class: (np.ndarray) of shape (k,p) where k is the number of 
+    instances in the concept class, and p is the feature space of an instance. 
+    The total number of instances is equal
+    to the total number of 'concepts'. A bag contains multiple concepts.
+    If each bag contains the same number of instances, then 
+    k = n_bags * n_instances_per_bag.  The number of instances per bag can vary
+    
+bags: (np.ndarray) shape (i,j,p) where n is the number of bags, j is the 
+    number of instances per bag, and p is the feature space per instance 
+    in a bag
+    
+sigma: (float) Scaling factor, try values in the range (0 -> 5)
+ 
 @author: vorst
 """
 
@@ -48,7 +98,7 @@ def radial_basis_function_distance(v1: np.ndarray,
     $exp (\gama ||v1 - v2||^2)$.
     """
     
-    return np.exp(-para_gamma * euclidean_distance(v1, v2))
+    return np.exp(-gamma * euclidean_distance(v1, v2))
 
 
 
@@ -94,6 +144,19 @@ def embed_bag(concept_class: np.ndarray,
               bag: np.ndarray, 
               sigma: float,
               distance: str='euclidean') -> np.ndarray:
+    """Embed a bag onto a concept class (A concept class is a set of instances)
+    inputs
+    -------
+    concept_class: (np.ndarray)
+    bag: (np.ndarray)
+    sigma: (float)
+    distance: (str) 'euclidean' is the only supported distance metric
+    outputs
+    -------
+    embedding: (np.ndarray) size (k,1) where k is the number of concepts in
+        the concept class. Each column represents a bag, and the kth feature 
+        in the concept class realizes the kth row of the matrix
+        """
     
     embedded_bag = np.zeros((concept_class.shape[0]))
     for n in range(0, embedded_bag.shape[0]):
@@ -115,6 +178,15 @@ def embed_all_bags(concept_class: np.ndarray,
     instances)
     inputs
     -------
+    concept_class: (np.ndarray) of shape (k,p) where k is the number of 
+        instances in the concept class. The total number of instances is equal
+        to the total number of 'concepts'. A bag contains multiple concepts.
+        If each bag contains the same number of instances, then 
+        k = n_bags * n_instances_per_bag
+    bags: (np.ndarray) shape (i,j,p) where n is the number of bags, j is the 
+        number of instances per bag, and p is the feature space per instance 
+        in a bag
+    sigma: (float) Scaling factor, try values in the range (0 -> 5)
     outputs
     -------
     embedding: (np.ndarray) size (k,l) where k is the number of concepts in
