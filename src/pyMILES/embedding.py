@@ -186,16 +186,21 @@ def embed_all_bags(concept_class: np.ndarray,
     bags: (np.ndarray) shape (i,j,p) where n is the number of bags, j is the 
         number of instances per bag, and p is the feature space per instance 
         in a bag
+        (list) of numpy arrays, shape (j,P)
     sigma: (float) Scaling factor, try values in the range (0 -> 5)
     outputs
     -------
     embedding: (np.ndarray) size (k,l) where k is the number of concepts in
-    the concept class, and l is the number of bags being embedded. Each column 
-    represents a bag, and the kth feature in the concept class realizes the kth 
-    row of the matrix"""
+        the concept class, and l is the number of bags being embedded. Each column 
+        represents a bag, and the kth feature in the concept class realizes the kth 
+        row of the matrix
+    """
     
     # Embed all bags using all training instances
-    embedded_bags = np.zeros((concept_class.shape[0], bags.shape[0]))
+    if hasattr(bags, 'shape'):
+        embedded_bags = np.zeros((concept_class.shape[0], bags.shape[0]))
+    else if hasattr(bags, '__len__'):
+        embedded_bags = np.zeros((concept_class.shape[0], len(bags)))
     for i, bag in enumerate(bags):
         embedded_bags[:,i] = embed_bag(concept_class, bag, sigma, distance)
     
