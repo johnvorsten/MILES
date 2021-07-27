@@ -199,12 +199,15 @@ def embed_all_bags(concept_class: np.ndarray,
     # Embed all bags using all training instances
     if hasattr(bags, 'shape'):
         embedded_bags = np.zeros((concept_class.shape[0], bags.shape[0]))
+    # List of bags
     elif hasattr(bags, '__len__'):
         embedded_bags = np.zeros((concept_class.shape[0], len(bags)))
+    # Iterate through list or slices of numpy array
     for i, bag in enumerate(bags):
         embedded_bags[:,i] = embed_bag(concept_class, bag, sigma, distance)
     
     return embedded_bags
+
 
 #%% Testing
 
