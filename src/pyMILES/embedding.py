@@ -56,6 +56,7 @@ sigma: (float) Scaling factor, try values in the range (0 -> 5)
 """
 
 # Python imports
+from typing import Union
 
 # Third party imports
 import numpy as np
@@ -117,9 +118,11 @@ def most_likely_estimator(concept: np.ndarray,
     of the norm between a bag instance and target concept
     inputs
     -------
-    concept: (np.ndarray)
-    bag: (np.ndarray)
-    sigma: (float)
+    concept: (np.ndarray) of shape (1,p) where p is the number of instances
+        in the concept class
+    bag: (np.ndarray) of shape (j,p) where j is the number of instances in 
+        a bag, and p is the instance space of a bag
+    sigma: (float) regularization paramter
     """
     
     if distance == 'euclidean':
@@ -148,8 +151,9 @@ def embed_bag(concept_class: np.ndarray,
     inputs
     -------
     concept_class: (np.ndarray)
-    bag: (np.ndarray)
-    sigma: (float)
+    bag: (np.ndarray) of shape (j,p) where j is the number of instances in 
+        a bag, and p is the instance space of a bag
+    sigma: (float) regularization paramter
     distance: (str) 'euclidean' is the only supported distance metric
     outputs
     -------
@@ -159,6 +163,7 @@ def embed_bag(concept_class: np.ndarray,
         """
     
     embedded_bag = np.zeros((concept_class.shape[0]))
+        
     for n in range(0, embedded_bag.shape[0]):
         # Calculate similarity measure for each training instance
         embedded_bag[n] = most_likely_estimator(concept_class[n],
@@ -169,9 +174,9 @@ def embed_bag(concept_class: np.ndarray,
     return embedded_bag
 
 
-
+# TODO support sparse arrays
 def embed_all_bags(concept_class: np.ndarray,
-                   bags: np.ndarray,
+                   bags: Union[np.ndarray, list],
                    sigma: float,
                    distance: str='euclidean') -> np.ndarray:
     """Embed a set of bags onto a concept class (A concept class is a set of 
@@ -187,7 +192,10 @@ def embed_all_bags(concept_class: np.ndarray,
         number of instances per bag, and p is the feature space per instance 
         in a bag
         (list) of numpy arrays, shape (j,P)
-    sigma: (float) Scaling factor, try values in the range (0 -> 5)
+    sigma: (float) Scaling factor, try values in the range (0 -> 5). 
+        Low values greatly penalize the dissimilarity between the concept class 
+        and bag.
+        High values allow tolerance between the concept class and bags
     outputs
     -------
     embedding: (np.ndarray) size (k,l) where k is the number of concepts in
@@ -195,6 +203,21 @@ def embed_all_bags(concept_class: np.ndarray,
         represents a bag, and the kth feature in the concept class realizes the kth 
         row of the matrix
     """
+    
+    if not concept_class.ndim == 2:
+        msg=("Expecting array of shape (k,p) with 2 dimensions. " +
+             "Got {} dimensions")
+        raise ValueError(msg.format(concept_class.ndim))
+
+    if hasattr(bags, 'ndim'):
+        if not bags.ndim == 3:
+            msg=("Expecting bags array of shape (i,j,p) with 3 dimensions. " + 
+                 "Got {} dimensions")
+            raise ValueError(msg.format(bags.ndim))
+            
+    if not isinstance(concept_class, np.ndarray):
+        msg=("Expecting dense numpy array. Got {}".format(type(concept_class)))
+        raise ValueError(msg)
     
     # Embed all bags using all training instances
     if hasattr(bags, 'shape'):

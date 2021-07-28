@@ -113,7 +113,7 @@ embedded_bag = embed_bag(C, positive_bags[9], 3) # Shape (320,) (n_instances * b
 
 # Embed all bags onto training instances
 bags = np.concatenate((positive_bags, negative_bags), axis=0)
-embedded_bags = embed_all_bags(C, bags, 3)
+embedded_bags = embed_all_bags(C, bags, 3, distance='euclidean')
 
 #%% Visualization - reduced bag space
 
