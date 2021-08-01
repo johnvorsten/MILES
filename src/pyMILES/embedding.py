@@ -174,7 +174,6 @@ def embed_bag(concept_class: np.ndarray,
     return embedded_bag
 
 
-# TODO support sparse arrays
 def embed_all_bags(concept_class: np.ndarray,
                    bags: Union[np.ndarray, list],
                    sigma: float,
