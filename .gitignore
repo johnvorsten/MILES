@@ -9,7 +9,7 @@
 
 
 # Other files
-
+.coverage
 
 # Folders
 __pycache__

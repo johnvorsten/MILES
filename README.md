@@ -1,3 +1,5 @@
+[![Tests](https://github.com/johnvorsten/trendreview/actions/workflows/python-app.yml/badge.svg)](https://github.com/johnvorsten/pyMILES/actions/workflows/python-app.yml) ![coverage](https://img.shields.io/static/v1?label=Coverage&message=74%&color=green)
+
 # Multiple instance learning via embedded instance selection
 This python package is an implementation of MILES: Multiple-instance learning via embedded instance selection from IEEE TRANSACTIONS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE, VOL. 28, NO. 12, DECEMBER 2006.
 
@@ -32,3 +34,17 @@ x2 = np.array([5.4, -3.9])
 x3 = np.array([-6.0, 4.8])
 ```
 the result is a (3,40) matrix which is visualized below. ![#Linearly Separable Bags](example_embedding.png "Example Embedding onto positive distributions")
+
+## Testing
+* python -m unittest tests.embedding_test
+* python -m unittest tests.l1_svm_test
+
+## Code coverage and linting
+* pylint -r n src/tests/ src/pyMILES
+* From src directory: `coverage run -m unittest tests.embedding_test`
+* autopep8 --recursive --in-place src/tests/ src/pyMILES/
+
+## Building
+Increment build version in setup.cfg
+python -m build .
+python -m twine upload dist/*
