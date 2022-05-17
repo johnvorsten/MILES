@@ -13,9 +13,6 @@ on:
       - main
 
 jobs:
-  job_name:
-    if: ${{ false }} # Disable linting job for this workflow
-
   build:
     runs-on: ubuntu-latest
 
