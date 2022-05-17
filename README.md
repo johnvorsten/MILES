@@ -1,4 +1,4 @@
-[![Tests](https://github.com/johnvorsten/trendreview/actions/workflows/python-app.yml/badge.svg)](https://github.com/johnvorsten/pyMILES/actions/workflows/python-app.yml) ![coverage](https://img.shields.io/static/v1?label=Coverage&message=74%&color=green)
+[![Tests](https://github.com/johnvorsten/MILES/actions/workflows/python-app.yml/badge.svg)](https://github.com/johnvorsten/MILES/actions/workflows/python-app.yml) ![coverage](https://img.shields.io/static/v1?label=Coverage&message=74%&color=green)
 
 # Multiple instance learning via embedded instance selection
 This python package is an implementation of MILES: Multiple-instance learning via embedded instance selection from IEEE TRANSACTIONS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE, VOL. 28, NO. 12, DECEMBER 2006.
