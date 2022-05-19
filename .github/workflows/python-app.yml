@@ -7,9 +7,18 @@ on:
       - 'src/tests/*.py'
     branches:
       - main
+      
   pull_request:
     branches:
       - main
+
+  workflow_dispatch:
+    inputs:
+      manualRun:
+        description: 'Manual Run'     
+        required: true
+      tags:
+        description: 'Test manual input scenario tags'  
 
 jobs:
   build:

@@ -7,10 +7,19 @@ on:
     paths:
       - src/tests/*.py
       - src/pyMILES/*.py
+
   pull_request:
     # Run on pull request regardless of directory changed
     branches:
       - main
+
+  workflow_dispatch:
+    inputs:
+      manualRun:
+        description: 'Manual Run'     
+        required: true
+      tags:
+        description: 'Test manual input scenario tags'  
 
 jobs:
   build:
