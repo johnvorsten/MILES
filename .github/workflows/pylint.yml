@@ -37,3 +37,4 @@ jobs:
       - name: Analyze code with pylint
         run: |
           pylint --reports n --disable C0103,R1720,W0611,R1711,C0303,C0304,C0410,E0401,C0415,W1510,W0612 src/tests src/pyMILES
+          pylint $(git ls-files '*.py')
